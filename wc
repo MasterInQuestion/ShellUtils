@@ -1,0 +1,31 @@
+	wc='/usr/bin/wc';
+
+	for x0;
+	do {
+# >>>> (0)
+	[ "$x0" != '--help' ] || {
+	cat "$0";
+	echo;
+	exec "$wc" --help 2>&1;
+	};
+	[ "$x0" != '--' ] || break;
+# <<<< (0)
+	};
+	done;
+#
+#	If meaningful option specified: invoke as specified.
+#	Else: "-lwmc"
+#
+	for x0;
+	do
+	[ "${x0%%[!-]*}" = '-' ] &&
+	[ "$x0" != '--' ] && exec "$wc" "$@";
+	done;
+
+	exec "$wc" -lwmc "$@";
+#
+#	"-l": Line count.
+#	"-w": Word count.
+#	"-m": Character count.
+#	"-c": Byte count.
+#
