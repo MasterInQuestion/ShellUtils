@@ -1,3 +1,6 @@
+# [20240628] `wc` - Wrapper of `wc` (word count).
+#	See also: https://www.gnu.org/software/coreutils/manual/coreutils.html#wc-invocation
+
 	wc='/usr/bin/wc';
 
 	for x0;
