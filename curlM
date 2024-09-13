@@ -1,3 +1,3 @@
-	exec "${0%"$( basename "$0" )"}curl" \
+	exec "${0%/*}/curl" \
 	-A 'Mozilla/5.0 (Linux; rv:999) Gecko/20100101 Firefox/999' \
 	"$@";
