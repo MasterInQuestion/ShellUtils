@@ -1,0 +1,6 @@
+	exec '/usr/bin/curl' -q \
+	--no-progress-meter \
+	--compressed \
+	-A '' \
+	--doh-url '1.1.1.1/dns-query' \
+	-g "$@";
