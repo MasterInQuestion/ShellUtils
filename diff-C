@@ -1,0 +1,26 @@
+	exec '/usr/bin/diff' \
+	--unchanged-group-format='' \
+	--old-group-format=\
+'|*| Line %dF: missing %dn line%(n=1?:s):
+[[
+%<]]
+(line %(n=1?%df:%df - %dl))
+
+' \
+	--new-group-format=\
+'|*| Line %dF: additional %dN line%(N=1?:s):
+[[
+%>]]
+
+' \
+	--changed-group-format=\
+'|*| Line %dF: changed %dN line%(N=1?:s):
+[[
+%>]]
+, from:
+[[
+%<]]
+(line %(n=1?%df:%df - %dl))
+
+' \
+	"$@";

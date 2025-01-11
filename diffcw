@@ -1,0 +1,5 @@
+	exec '/usr/bin/diff' -u \
+	--color=always \
+	--suppress-blank-empty \
+	--strip-trailing-cr \
+	"$@";

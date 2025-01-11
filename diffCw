@@ -1,0 +1,3 @@
+	exec "${0%/*}/diffC" \
+	--strip-trailing-cr \
+	"$@";
