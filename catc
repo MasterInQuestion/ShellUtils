@@ -1,0 +1,34 @@
+# [20240930] `catc` - `cat` pretty-print for multi-file view
+#	https://github.com/MasterInQuestion/ShellUtils/blob/main/catc
+
+	[ $# -ne 0 ] || set -- '--help';
+	for x0;
+	do
+	[ "$x0" != '--' ] || break;
+	[ "$x0" != '--help' ] && continue;
+	cat "$0";
+	exit;
+	done;
+# ----
+	for x0 in "$@";
+	do
+	[ "$x0" != '--' ] || continue;
+	echo -ne '\e[40;1;97m|\e[91m*\e[97m| ';
+	echo -ne '\e[90m"\e[0;40;36m';
+	x1="${x0%\\}";
+	if
+	[ ${#x0} -eq ${#x1} ];
+
+	then
+	x1="${x1//\"/$'\e'[1;90m\\$'\e'[0;40;36m\"}";
+
+	else
+	x1="${x1//\"/$'\e'[1;90m\\$'\e'[0;40;36m\"}$( echo -n $'\e' )[1;90m\\$( echo -n $'\e' )[0;40;36m\\";
+
+	fi;
+	echo -nE "$x1";
+	echo -e '\e[1;90m"\e[93m:\e[m';
+	echo -e '\e[36m[[\e[m';
+	printf '%s\n' "$( cat -- "$x0" 2>&1 )";
+	echo -e '\e[36m]]\e[m\n';
+	done;

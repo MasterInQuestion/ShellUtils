@@ -1,0 +1,32 @@
+# [20240930] `catc-` - Colorless `catc`
+#	https://github.com/MasterInQuestion/ShellUtils/blob/main/catc-
+
+	[ $# -ne 0 ] || set -- '--help';
+	for x0;
+	do
+	[ "$x0" != '--' ] || break;
+	[ "$x0" != '--help' ] && continue;
+	cat "$0";
+	exit;
+	done;
+# ----
+	for x0 in "$@";
+	do
+	[ "$x0" != '--' ] || continue;
+	x1="${x0%\\}";
+	if
+	[ ${#x0} -eq ${#x1} ];
+
+	then
+	x1="${x1//\"/\\\"}";
+
+	else
+	x1="${x1//\"/\\\"}\\\\";
+
+	fi;
+	echo -E "|*| \"${x1}\":";
+	echo -E '[[';
+	printf '%s\n' "$( cat -- "$x0" 2>&1 )";
+	echo -E ']]';
+	echo;
+	done;
