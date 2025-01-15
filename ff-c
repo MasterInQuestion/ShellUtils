@@ -1,0 +1,21 @@
+	'/usr/bin/file' -00r -k "$@" |
+
+	PERLIO=':raw' '/usr/bin/perl' -p \
+	-e 'BEGIN { $^H |= 0x02000008; $^H{reflags_charset} = 4; $/ = undef(); }' \
+	-e '
+	sub f {
+	$filename = $1;
+	$result = $2;
+
+	$filename =~ s/(?="|\\$)/\\/g;
+	$filename = "\"${filename}\"";
+
+	"|*| ${filename}:\n".
+	"[[\n".
+	"${result}\n".
+	"]]\n".
+	"\n";
+	};
+
+	s/([^\x00]+)\x00([^\x00]+)\x00/ f(); /ge;
+	';

@@ -1,0 +1,27 @@
+	'/usr/bin/file' -00r -k "$@" |
+
+	PERLIO=':raw' '/usr/bin/perl' -p \
+	-e 'BEGIN { $^H |= 0x02000008; $^H{reflags_charset} = 4; $/ = undef(); }' \
+	-e '
+	sub f {
+	$filename = $1;
+	$result = $2;
+
+	$filename =~ s/(?="|\\$)/\e[1;90m\\\e[0;40;36m/g;
+	$filename = "\e[90m\"\e[0;40;36m${filename}\e[1;90m\"";
+
+	$result =~ s/(?<!\w)(?|CRLF((?:, CR)?(?:, LF)?)(*:1)|CR(, LF)?(*:2))(?= line(?: terminator|[ \-]?break)s?(?!\w))/
+	( length( $1 ) ? "\e[42;1;91m" :
+	( $REGMARK eq "1" ? "\e[7m" : "\e[7;91m" )
+	)."${&}\e[m"; /ge;
+	$result =~ s/(?<=(?<!\w)UTF-8 \(with )BOM(?=\)(?!\w))/\e[41;37m${&}\e[m/g;
+
+	"\e[40;1;97m|\e[91m*\e[97m| ${filename}\e[93m:\e[m\n".
+	"\e[36m[[\e[m\n".
+	"${result}\n".
+	"\e[36m]]\e[m\n".
+	"\n";
+	};
+
+	s/([^\x00]+)\x00([^\x00]+)\x00/ f(); /ge;
+	';
