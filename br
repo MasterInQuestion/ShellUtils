@@ -1,0 +1,29 @@
+# [20250606] `br` - Brightness set of Termux API
+#	https://github.com/MasterInQuestion/ShellUtils/blob/main/br
+#	Alt name: `brr`; if somehow conflicts Brotli.
+
+	[ -z "${1//[0-9]}" ] && {
+# ^ https://pubs.opengroup.org/onlinepubs/9799919799/utilities/test.html
+
+# https://github.com/termux/termux-api-package/blob/master/scripts/termux-brightness.in
+	exec '/data/data/com.termux/files/usr/libexec/termux-api-broadcast' 'Brightness' \
+	--ei brightness "${1:-"17"}" \
+	--ez auto false; # ^ Substitute "17" with other desirable, if desired.
+# Note "termux-api-broadcast" is "termux-api" symlink resolved.
+	};
+	cat "$0";
+#
+#	"${var:-"subst"}"
+#	https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html#tag_19_06_02
+#
+#	"${var//patn}"
+#	https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html
+#
+#	Basic Regular Expressions
+#	https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/V1_chap09.html#tag_09_03
+#	https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html#tag_19_14
+#	https://www.gnu.org/software/bash/manual/bash.html#Filename-Expansion
+#
+#	Further discussion:
+#	https://github.com/termux/termux-api/discussions/778
+#
