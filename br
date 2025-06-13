@@ -4,6 +4,7 @@
 
 	[ -z "${1//[0-9]}" ] && {
 # ^ https://pubs.opengroup.org/onlinepubs/9799919799/utilities/test.html
+#	[ $1 -le 255 ] || set -- 255; # [1]
 
 # https://github.com/termux/termux-api-package/blob/master/scripts/termux-brightness.in
 	exec '/data/data/com.termux/files/usr/libexec/termux-api-broadcast' 'Brightness' \
@@ -26,4 +27,9 @@
 #
 #	Further discussion:
 #	https://github.com/termux/termux-api/discussions/778
+#
+# [ [1]
+#	The exact interpretation of the input value is implementation dependent.
+#	Expected integer range 0 .. 255.
+#	Passing certain outrageous values may cause irrevocable hardware damage. ]
 #
