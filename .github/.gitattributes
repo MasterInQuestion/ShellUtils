@@ -1,0 +1,10 @@
+#	https://webapps.stackexchange.com/questions/31654/force-github-syntax-highlighting-language-on-source-files#108676
+#	https://github.com/github-linguist/linguist/blob/main/docs/overrides.md
+#
+	*	linguist-language=shell
+#	./**	!linguist-language
+# ^
+#	Many things about accurate matching are glitching.
+#	Currently just made a blind effort of that should work mostly.
+#	(fails fringe cases of course)
+#
