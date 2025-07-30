@@ -4,4 +4,5 @@
 	-A '' \
 	--doh-url '1.1.1.1/dns-query' \
 	--proto-default https \
+	--connect-timeout 6 \
 	-g "$@";
